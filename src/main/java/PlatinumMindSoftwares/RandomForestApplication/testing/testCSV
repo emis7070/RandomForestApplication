@@ -1,0 +1,13 @@
+String filePath = "src/main/java/PlatinumMindSoftwares/RandomForestApplication/datasets/Dataset_spine.csv";
+		try (CSVReader csvReader = new CSVReader(new FileReader(filePath))) {
+			List<String[]> records = csvReader.readAll();
+			for (String[] record : records) {
+				for (String field : record) {
+					System.out.print(field + " ");
+				}
+				System.out.println();
+			}
+		} catch (IOException | CsvException e) {
+			e.printStackTrace();
+		}
+
