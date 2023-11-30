@@ -1,4 +1,5 @@
 package PlatinumMindSoftwares.RandomForestApplication;
+import PlatinumMindSoftwares.RandomForestApplication.classifier.RandomForest;
 import PlatinumMindSoftwares.RandomForestApplication.datasets.Dataset;
 import PlatinumMindSoftwares.RandomForestApplication.datasets.Instance;
 import com.opencsv.CSVReader;
@@ -11,7 +12,6 @@ import java.util.*;
 
 @SpringBootApplication
 public class RandomForestApplication {
-
 	public static void main(String[] args) {
 		String filePath = "src/main/java/PlatinumMindSoftwares/RandomForestApplication/datasets/Dataset_spine.csv";
 		int labelIndex = 12; // Assuming the target value is in the last column
@@ -30,6 +30,25 @@ public class RandomForestApplication {
 			System.out.println("Instance " + (i + 1) + ": " + instance);
 		}
 
+		// Initialize and train the random forest
+		int numTrees = 10; // Adjust as needed
+		int maxFeatures = 6; // Adjust as needed
+		int minSamplesLeaf = 5; // Adjust as needed
+		RandomForest randomForest = new RandomForest(dataset, numTrees, maxFeatures, minSamplesLeaf);
+
+		// Test the entire dataset
+		for (int i = 0; i < dataset.getSize(); i++) {
+			Instance instance = dataset.getInstance(i);
+			double[] features = instance.getFeatureVector();
+
+			// Predict the label using the random forest
+			int predictedLabel = randomForest.predictLabel(features);
+
+			// Display the actual label and predicted label
+			System.out.println("Instance " + (i + 1) +
+					": Actual Label = " + instance.getLabelIndex() +
+					", Predicted Label = " + predictedLabel);
+		}
 	}
 	private static Dataset readDatasetFromCSV(String filePath, int labelIndex) {
 		List<Instance> instances = new ArrayList<>();
