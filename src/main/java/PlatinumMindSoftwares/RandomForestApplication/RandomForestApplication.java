@@ -2,6 +2,8 @@ package PlatinumMindSoftwares.RandomForestApplication;
 import PlatinumMindSoftwares.RandomForestApplication.classifier.RandomForest;
 import PlatinumMindSoftwares.RandomForestApplication.datasets.Dataset;
 import PlatinumMindSoftwares.RandomForestApplication.datasets.Instance;
+import PlatinumMindSoftwares.RandomForestApplication.datasets.TestTrain;
+import PlatinumMindSoftwares.RandomForestApplication.utils.EntropyUtils;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,27 +25,56 @@ public class RandomForestApplication {
 		System.out.println("Number of instances: " + dataset.getNumOfInstances());
 		System.out.println("Number of features: " + dataset.getNumOfFeatures());
 
-		// Print the first few instances
-		System.out.println("First few instances:");
-		for (int i = 0; i < Math.min(5, dataset.getSize()); i++) {
-			Instance instance = dataset.getInstance(i);
-			System.out.println("Instance " + (i + 1) + ": " + instance);
-		}
+		// Specify the random seed for reproducibility
+		long seed = 123;
+		Random rng = new Random(seed);
 
-		// Initialize and train the random forest
+		// Split the dataset into training and test sets using TestTrain class
+		int splitSize = 80; // 80% for training
+		TestTrain testTrainSplit = new TestTrain(dataset, splitSize, rng);
+
+		// Initialize and train the random forest on the training set
 		int numTrees = 10; // Adjust as needed
 		int maxFeatures = 6; // Adjust as needed
 		int minSamplesLeaf = 5; // Adjust as needed
-		RandomForest randomForest = new RandomForest(dataset, numTrees, maxFeatures, minSamplesLeaf);
+		RandomForest randomForest = new RandomForest(testTrainSplit.train, numTrees, maxFeatures, minSamplesLeaf);
 
-		// Get user input for features
-		double[] userFeatures = getUserInput();
+		// Evaluate the model on the test set
+		int correctPredictions = 0;
+		for (int i = 0; i < testTrainSplit.test.getSize(); i++) {
+			Instance instance = testTrainSplit.test.getInstance(i);
+			double[] features = instance.getFeatureVector();
+			int actualLabel = instance.getLabelIndex();
 
-		// Predict the label using the random forest
-		int predictedLabel = randomForest.predictLabel(userFeatures);
+			// Predict the label using the random forest
+			int predictedLabel = randomForest.predictLabel(features);
 
-		// Display the predicted label
-		System.out.println("Predicted Label = " + (predictedLabel == 1 ? "Abnormal" : "Normal"));
+			// Compare predicted label with actual label
+			if (predictedLabel == actualLabel) {
+				correctPredictions++;
+			}
+		}
+
+		// Calculate accuracy on the test set
+		double accuracy = (double) correctPredictions / testTrainSplit.test.getSize();
+		System.out.println("Test Accuracy: " + (accuracy * 100) + "%");
+
+		/**
+		 * calculated the entropy of your training and test sets.
+		 * The entropy values provide insights into the impurity or disorder within the datasets.
+		 * Lower entropy values indicate that the dataset is more pure, which is often desirable.
+		 */
+
+		// Calculate entropy of the labels in the training set
+		List<Integer> trainLabels = testTrainSplit.train.getLabels();
+		double trainSetEntropy = EntropyUtils.getEntropy(trainLabels);
+		System.out.println("Entropy of the training set: " + trainSetEntropy);
+
+		// Calculate entropy of the labels in the test set
+		List<Integer> testLabels = testTrainSplit.test.getLabels();
+		double testSetEntropy = EntropyUtils.getEntropy(testLabels);
+		System.out.println("Entropy of the test set: " + testSetEntropy);
+
 	}
 	private static Dataset readDatasetFromCSV(String filePath, int labelIndex) {
 		List<Instance> instances = new ArrayList<>();

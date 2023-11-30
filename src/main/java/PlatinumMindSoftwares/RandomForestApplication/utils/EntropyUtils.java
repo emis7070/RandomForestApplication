@@ -4,6 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * entropy is commonly used to measure impurity.
+ *
+ *  H(X)=0 when all samples in the set belong to the same class (perfectly pure set).
+ *      A lower entropy value indicates that the set is more homogeneous, meaning there is less disorder or uncertainty about the class labels.
+ *
+ *  H(X)=1 when the samples are evenly distributed across all classes (maximum impurity).
+ *      A higher entropy value indicates more disorder or mixed class labels in the set.
+ */
 public class EntropyUtils {
     /*
      * calculate the entropy of response variables.
