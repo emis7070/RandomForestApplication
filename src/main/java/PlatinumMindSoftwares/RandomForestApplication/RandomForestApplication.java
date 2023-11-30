@@ -36,19 +36,14 @@ public class RandomForestApplication {
 		int minSamplesLeaf = 5; // Adjust as needed
 		RandomForest randomForest = new RandomForest(dataset, numTrees, maxFeatures, minSamplesLeaf);
 
-		// Test the entire dataset
-		for (int i = 0; i < dataset.getSize(); i++) {
-			Instance instance = dataset.getInstance(i);
-			double[] features = instance.getFeatureVector();
+		// Get user input for features
+		double[] userFeatures = getUserInput();
 
-			// Predict the label using the random forest
-			int predictedLabel = randomForest.predictLabel(features);
+		// Predict the label using the random forest
+		int predictedLabel = randomForest.predictLabel(userFeatures);
 
-			// Display the actual label and predicted label
-			System.out.println("Instance " + (i + 1) +
-					": Actual Label = " + instance.getLabelIndex() +
-					", Predicted Label = " + predictedLabel);
-		}
+		// Display the predicted label
+		System.out.println("Predicted Label = " + (predictedLabel == 1 ? "Abnormal" : "Normal"));
 	}
 	private static Dataset readDatasetFromCSV(String filePath, int labelIndex) {
 		List<Instance> instances = new ArrayList<>();
@@ -81,6 +76,21 @@ public class RandomForestApplication {
 		}
 
 		return new Dataset(instances);
+	}
+
+	// Method to get user input for features
+	private static double[] getUserInput() {
+		Scanner scanner = new Scanner(System.in);
+		double[] userFeatures = new double[12]; // Assuming there are 12 features
+
+		System.out.println("Enter values for each feature:");
+
+		for (int i = 0; i < userFeatures.length; i++) {
+			System.out.print("Feature " + (i + 1) + ": ");
+			userFeatures[i] = scanner.nextDouble();
+		}
+
+		return userFeatures;
 	}
 
 }
