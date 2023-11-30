@@ -75,6 +75,16 @@ public class RandomForestApplication {
 		double testSetEntropy = EntropyUtils.getEntropy(testLabels);
 		System.out.println("Entropy of the test set: " + testSetEntropy);
 
+
+		// Get user input for features
+		double[] userFeatures = getUserInput();
+
+		// Predict the label using the random forest
+		int predictedLabel = randomForest.predictLabel(userFeatures);
+
+		// Display the predicted label
+		System.out.println("Predicted Label = " + (predictedLabel == 1 ? "Abnormal" : "Normal"));
+
 	}
 	private static Dataset readDatasetFromCSV(String filePath, int labelIndex) {
 		List<Instance> instances = new ArrayList<>();
