@@ -123,11 +123,25 @@ public class RandomForestApplication {
 	private static double[] getUserInput() {
 		Scanner scanner = new Scanner(System.in);
 		double[] userFeatures = new double[12]; // Assuming there are 12 features
+		String[] featuresNames =
+				{"pelvic incidence",
+						"pelvic tilt",
+						"lumbar lordosis angle",
+						"sacral slope",
+						"pelvic radius",
+						"degree spondylolisthesis",
+						"pelvic slope",
+						"Direct tilt",
+						"thoracic slope",
+						"cervical tilt",
+						"sacrum angle",
+						"scoliosis slope"
+				};
 
 		System.out.println("Enter values for each feature:");
 
 		for (int i = 0; i < userFeatures.length; i++) {
-			System.out.print("Feature " + (i + 1) + ": ");
+			System.out.print(featuresNames[i] + ": ");
 			userFeatures[i] = scanner.nextDouble();
 		}
 
