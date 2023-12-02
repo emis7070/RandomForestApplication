@@ -12,24 +12,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The class builds a decision tree using a provided dataset, makes predictions,
+ *  and allows for customization of parameters such as
+ *      the maximum number of features to consider for splitting and the minimum number of samples required to create a leaf node.
+ */
+
 public class DecisionTree {
-    // root of the decision tree.
+    /**
+     * representing the top-level decision or split.
+     *  EX.  If the decision tree is predicting whether a person will buy a product based on age and income,
+     *      the root node might represent the decision to split the data based on age.
+     */
     private TreeNode root;
 
-    // for each node, we randomly select subset of features to consider for splitting
-    // by default, we set the size as square root of total number of features.
+    /**
+     * The maximum number of features considered for splitting at each node. It controls the randomness in feature selection.
+     * EX.  If you have 10 features (e.g., age, income, gender, etc.) and maxFeatures is set to 3,
+     *  the decision tree will randomly select 3 features for consideration at each node during the tree-building process.
+     */
     private int maxFeatures;
 
+    /**
+     * The number of unique labels or classes in the dataset. It is the number of distinct categories the target variable can take.
+     * EX. If your dataset is classifying animals into three categories (mammals, reptiles, birds), numLabels would be set to 3.
+     */
     private int numLabels = 3;
 
-    // minimum size of subtree, this value can be used as condition for termination.
-    // by default, we set the size as 10.
+    /**
+     * The minimum number of samples required to create a leaf node (a terminal node representing a class label).
+     * EX. If minSamplesLeaf is set to 5, a decision node won't be split into leaf nodes unless it has at least 5 instances in it.
+     */
     private int minSamplesLeaf = 10;
 
-    DecisionTree() {
+    public DecisionTree() {
     }
 
-    void buildTree(Dataset Dataset, int maxFeatures, int minSamplesLeaf) {
+    public void buildTree(Dataset Dataset, int maxFeatures, int minSamplesLeaf) {
         this.maxFeatures = maxFeatures;
         this.minSamplesLeaf = minSamplesLeaf;
         root = build(Dataset);
@@ -84,7 +103,6 @@ public class DecisionTree {
         return createDecisionNode(bestFeatureIndex, Dataset);
     }
 
-
     private int getBestFeatureIndex(int[] candidateFeatureIndex, Dataset Dataset) {
         double maxInfoGain = Double.MIN_VALUE;
         int bestFeatureIndex = 0;
@@ -100,7 +118,6 @@ public class DecisionTree {
         }
         return bestFeatureIndex;
     }
-
 
     private double getInformationGain(double entropy, int featureIndex, Dataset Dataset) {
         int dataSize = Dataset.getNumOfInstances();

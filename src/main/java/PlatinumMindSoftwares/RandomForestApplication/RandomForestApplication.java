@@ -34,9 +34,9 @@ public class RandomForestApplication {
 		TestTrain testTrainSplit = new TestTrain(dataset, splitSize, rng);
 
 		// Initialize and train the random forest on the training set
-		int numTrees = 10; // Adjust as needed
-		int maxFeatures = 6; // Adjust as needed
-		int minSamplesLeaf = 5; // Adjust as needed
+		int numTrees = 10;
+		int maxFeatures = 6;
+		int minSamplesLeaf = 5;
 		RandomForest randomForest = new RandomForest(testTrainSplit.train, numTrees, maxFeatures, minSamplesLeaf);
 
 		// Evaluate the model on the test set
@@ -47,23 +47,16 @@ public class RandomForestApplication {
 			int actualLabel = instance.getLabelIndex();
 
 			// Predict the label using the random forest
-			int predictedLabel = randomForest.predictLabel(features);
+			int predictedLabel = randomForest.predictLabel(randomForest, features, 2);
 
-			// Compare predicted label with actual label
+			// Compare predicted label with the actual label
 			if (predictedLabel == actualLabel) {
 				correctPredictions++;
 			}
 		}
-
 		// Calculate accuracy on the test set
 		double accuracy = (double) correctPredictions / testTrainSplit.test.getSize();
 		System.out.println("Test Accuracy: " + (accuracy * 100) + "%");
-
-		/**
-		 * calculated the entropy of your training and test sets.
-		 * The entropy values provide insights into the impurity or disorder within the datasets.
-		 * Lower entropy values indicate that the dataset is more pure, which is often desirable.
-		 */
 
 		// Calculate entropy of the labels in the training set
 		List<Integer> trainLabels = testTrainSplit.train.getLabels();
@@ -75,18 +68,16 @@ public class RandomForestApplication {
 		double testSetEntropy = EntropyUtils.getEntropy(testLabels);
 		System.out.println("Entropy of the test set: " + testSetEntropy);
 
-
 		// Get user input for features
 		double[] userFeatures = getUserInput();
 
 		// Predict the label using the random forest
-		int predictedLabel = randomForest.predictLabel(userFeatures);
+		int predictedLabel = randomForest.predictLabel(randomForest, userFeatures, 2);
 
 		// Display the predicted label
 		System.out.println("Predicted Label = " + (predictedLabel == 1 ? "Abnormal" : "Normal"));
-
 	}
-	private static Dataset readDatasetFromCSV(String filePath, int labelIndex) {
+	public static Dataset readDatasetFromCSV(String filePath, int labelIndex) {
 		List<Instance> instances = new ArrayList<>();
 
 		try (CSVReader reader = new CSVReader(new FileReader(filePath))) {

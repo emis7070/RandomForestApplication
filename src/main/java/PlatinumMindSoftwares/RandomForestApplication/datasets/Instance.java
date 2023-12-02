@@ -35,7 +35,7 @@ public class Instance {
     public String toString() {
         return "Instance{" +
                 "featureVector=" + Arrays.toString(featureVector) +
-                ", labelIndex=" + labelIndex +
+                ",labelIndex=" + labelIndex +
                 '}';
     }
 }

@@ -3,6 +3,12 @@ package PlatinumMindSoftwares.RandomForestApplication.utils;
 import java.util.Random;
 
 public class SamplerUtils {
+    /**
+     *
+     * @param n population size
+     * @param m Sample size
+     * @return
+     */
     public static int[] randSample(int n, int m) {
         int[] indexes = new int[n];
         for (int i = 0; i < n; i++)
@@ -31,7 +37,6 @@ public class SamplerUtils {
         for (int i = 0; i < n; i++) {
             bootstrapIndex[i] = new Random().nextInt(n);
         }
-
         return bootstrapIndex;
     }
 }

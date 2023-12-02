@@ -11,7 +11,7 @@ public class RandomForest {
     private int numTrees;
     private List<DecisionTree> decisionTrees;
 
-    // size of sampling for each bootstrap step.
+    // size of sampling for each bootstrap step
     private int maxFeatures;
 
     private int minSamplesLeaf;
@@ -35,30 +35,10 @@ public class RandomForest {
         for (int i = 0; i < numTrees; i++) {
             DecisionTree dt = new DecisionTree();
             dt.buildTree(getBootStrapData(), maxFeatures, minSamplesLeaf);
-
             decisionTrees.add(dt);
         }
     }
 
-
-    /**
-     * Get the predicted label for given feature vector.
-     *
-     * @param featureVector the input feature vector.
-     * @return predicted label.
-     */
-    public int predictLabel(double[] featureVector) {
-        double[] dist = predictDist(featureVector);
-        int maxLabel = 0;
-        double maxProb = 0;
-        for (int i = 0; i < dist.length; i++) {
-            if (dist[i] > maxProb) {
-                maxProb = dist[i];
-                maxLabel = i;
-            }
-        }
-        return maxLabel;
-    }
 
     /**
      * Get the prediction for the input feature vector.  Basically, it iterate
@@ -69,8 +49,7 @@ public class RandomForest {
      * @return prediction, which is probability distribution for different
      * labels.
      */
-    public double[] predictDist(double[] featureVector) {
-        int totalNumLabels = 3;
+    public double[] predictDist(double[] featureVector, int totalNumLabels) {
         double[] finalPredict = new double[totalNumLabels];
         // iterate through each decision tree, and make prediction.
         for (int i = 0; i < numTrees; i++) {
@@ -79,25 +58,34 @@ public class RandomForest {
                 finalPredict[j] += predict[j];
             }
         }
-
         for (int i = 0; i < totalNumLabels; i++) {
             finalPredict[i] = finalPredict[i] / numTrees;
         }
-
         return finalPredict;
     }
 
+    public int predictLabel(RandomForest randomForest, double[] featureVector, int totalNumLabels) {
+        double[] predictedDistribution = randomForest.predictDist(featureVector, totalNumLabels);
 
-    /**
-     * Get bootstrap Dataset, with replacement.
-     */
+        // Find the label with the highest probability as the predicted label
+        int predictedLabel = 0;
+        double maxProbability = predictedDistribution[0];
+        for (int i = 1; i < totalNumLabels; i++) {
+            if (predictedDistribution[i] > maxProbability) {
+                maxProbability = predictedDistribution[i];
+                predictedLabel = i;
+            }
+        }
+
+        return predictedLabel;
+    }
+
     private Dataset getBootStrapData() {
         int[] indexs = SamplerUtils.bootStrap(Dataset.getNumOfInstances());
         List<Instance> bootStrapSamples = new ArrayList<Instance>();
         for (int i = 0; i < indexs.length; i++) {
             bootStrapSamples.add(Dataset.getInstance(indexs[i]));
         }
-
         return new Dataset(bootStrapSamples);
     }
 }
