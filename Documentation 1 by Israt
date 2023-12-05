@@ -1,0 +1,221 @@
+Assignment 1 
+Focus: Domain analysis and requirements specification
+Lower Back Pain Symptoms 
+
+Introduction: 
+
+Lower back pain is a complex and multifaceted health issue that affects a significant portion of the population, often necessitating a nuanced approach for understanding its symptoms. In recent years, machine learning algorithms, such as Random Forest, have emerged as valuable tools in healthcare research and diagnostics. Through the lens of Random Forest, we can explore the diverse array of symptoms associated with lower back pain, shedding light on patterns, interconnections, and predictive factors that contribute to its manifestation.
+Random Forest, a robust ensemble learning algorithm, excels in analyzing large datasets by constructing a multitude of decision trees and combining their outputs. Leveraging this approach allows us to uncover intricate relationships between various symptoms and their potential significance in the context of lower back pain. By identifying key features and their importance, we aim to enhance our understanding of the symptomatology associated with lower back pain. Lower back pain can be caused by a variety of problems with any parts of the complex, interconnected network of spinal muscles, nerves, bones, discs or tendons in the lumbar spine. In order to provide predictions, machine learning uses data to build models and algorithms that are then applied to fresh data. The goal is to create a predictive model that can accurately classify individuals as either normal or abnormal based on their spine data.
+
+
+Glossary: 
+
+Lower Back Pain (LBP): A condition characterized by discomfort or pain in the lumbar region, often caused by various factors such as muscle strains, ligament sprains, herniated discs, or degenerative conditions.
+
+Physical Spine Details: Quantifiable measurements and characteristics related to the spine, including but not limited to curvature, alignment, dimensions, and other anatomical features that contribute to the assessment of spinal health.
+
+Normal Spinal Condition: Refers to the state in which an individual's physical spine details fall within a typical range, indicating a healthy and non-pathological condition.
+
+Abnormal Spinal Condition: Indicates deviations from the normal range in physical spine details, suggesting the presence of factors contributing to lower back pain or spinal disorders.
+
+Symptomatology: The collection of symptoms associated with lower back pain. 
+
+Random Forest Algorithm: An ensemble machine learning algorithm used to analyze and classify data, particularly effective for binary classification tasks. In the context of the dataset, it is employed to identify whether an individual's physical spine details categorize them as normal or abnormal.
+
+Binary Classification: The process of categorizing data into two distinct classes or outcomes. In this context, the classification of individuals as either having a normal or abnormal spinal condition based on collected physical spine details.
+
+Feature Importance: The measure of the contribution of individual features (physical spine details) in a dataset to the overall predictive capability of a machine learning model, such as the Random Forest algorithm.
+
+Confidence Interval: A statistical measure representing the range within which the true value of a classification outcome is likely to fall. In the dataset context, it provides a level of certainty for the Random Forest model's predictions.
+
+1. Functional requirements (3 User requirements tabulated with 3 functional requirements) : 
+
+User Requirement 1: Comprehensive Symptom Analysis
+Functional Requirements
+The dataset should encompass a comprehensive range of physical parameters related to the spine, allowing for the development and training of a machine learning model.
+1. Diverse Dataset Inclusion: Incorporate a diverse dataset with an extensive array of physical spine details, including measurements, angles, and relevant metrics associated with spinal health.
+
+
+2. Symptom Standardization: Implement a standardized system for collecting and representing lower back pain symptoms in the dataset. Ensure consistency in recording symptoms like aching, stiffness, and radiating pain for accurate analysis by the Random Forest algorithm.
+
+
+3. Interactive Visualization Module: Provide an interactive visualization module allowing users to explore the dataset's physical spine details. Enable users to visualize correlations, distributions, and trends among various features for a better understanding of the dataset's characteristics.
+
+
+
+
+User Requirement 2: Accurate Binary Classification
+Functional Requirements
+Random Forest Model Integration: Develop and integrate a Random Forest model capable of binary classification, accurately distinguishing between individuals with normal and abnormal spinal conditions. The model should be trained on the collected physical spine details dataset, optimizing its ability to make precise classifications.
+1. Random Forest Model Development: Develop a Random Forest model for binary classification, trained on the physical spine details dataset to accurately distinguish between normal and abnormal spinal conditions.
+
+
+2. Real-time Prediction Interface: Implement a user interface allowing real-time predictions using the trained Random Forest model. Users should input specific physical spine details, and the system should promptly classify the individual as normal or abnormal, providing immediate feedback.
+
+
+3. Confidence Interval Reporting: Include a feature that provides users with a confidence interval for each classification. This functionality enhances transparency by indicating the model's level of certainty in its predictions, assisting users in interpreting and trusting the classification outcomes.
+
+
+
+User Requirement 3: Feature Importance Insights
+Functional Requirements
+Dynamic Feature Importance Calculation: Incorporate a dynamic mechanism for calculating and updating feature importance within the Random Forest model. This ensures that the significance of physical spine details contributing to the classification is continuously adjusted based on the evolving dataset.
+1. Dynamic Feature Importance Updates: Implement a dynamic mechanism for calculating and updating feature importance within the Random Forest model as the dataset evolves, ensuring continuous adjustment of the significance of physical spine details.
+
+
+2. Visual Feature Importance Representation: Design a visual representation of feature importance rankings, including graphical displays such as bar charts or heatmaps. This allows users to easily interpret and prioritize physical spine details influencing the Random Forest classification outcomes.
+
+
+3. Exportable Feature Importance Data: Provide functionality for users to export feature importance data for further analysis. This requirement enables integration with external tools or the generation of detailed reports, empowering users to delve deeper into the insights derived from the Random Forest model's feature importance analysis.
+
+
+2. Non-Functional Requirements:
+User Requirement 1: Comprehensive Dataset for Symptom Analysis
+Non-Functional Requirement 1: Data Privacy and Security:
+The system shall adhere to strict data privacy regulations, ensuring the anonymization and protection of personal information within the collected dataset.
+Non-Functional Requirement 2: Scalability:
+The system shall be designed to handle a scalable dataset, accommodating an increasing volume of spine details without compromising performance.
+User Requirement 2: Accurate Binary Classification
+Non-Functional Requirement 1: Model Robustness:
+The system shall be robust to variations in the dataset and changes in spine details, ensuring the stability and reliability of the Random Forest model in diverse scenarios.
+Non-Functional Requirement 2: Response Time:
+The real-time prediction interface shall provide predictions within a response time of no more than 1 second to ensure a seamless user experience.
+User Requirement 3: Feature Importance Insights
+Non-Functional Requirement 1: Model Explainability:
+The system shall prioritize model explainability, providing clear and interpretable insights into the factors influencing classification outcomes.
+Non-Functional Requirement 2: Integration Flexibility:
+The system shall be designed with flexibility to seamlessly integrate with various external analytics tools, supporting interoperability and enhancing the user's ability to derive insights.
+
+
+3. Functional System Requirements Specification :
+Requirement ID
+Description
+Inputs
+Source
+Outputs
+Destination
+Precondition
+Action
+Postcondition
+Side Effects
+1
+Data Collection of Physical Spine Details
+Physical Spine Details
+Users, Data Collection Module
+Comprehensive dataset with spine details
+Database
+-
+Users input physical spine details.
+Dataset is updated with new information.
+None
+2
+Data Preprocessing for Random Forest
+Raw Spine Data
+Data Preprocessing Module
+Preprocessed dataset
+Machine Learning
+1 completed
+Apply techniques: handle missing values, encode categorical variables, scale numerical features.
+Preprocessed dataset is available.
+None
+3
+Interactive Visualization Interface
+Preprocessed Spine Details
+Users, Visualization Module
+Dynamic exploration of spine details
+User Interface
+2 completed
+Users interactively select and visualize spine details through the system interface.
+Users gain insights from visualizations.
+None
+4
+Random Forest Model Development
+Preprocessed Spine Details
+Machine Learning Module
+Trained Random Forest Model
+Model Repository
+2 completed
+Train a Random Forest model using preprocessed spine details.
+Trained model is available for use.
+None
+5
+Model Evaluation Metrics
+Trained Random Forest Model
+Evaluation Module
+Classification metrics
+Users
+4 completed
+Evaluate the model using metrics such as accuracy, precision, recall, and F1 score.
+Evaluation metrics are provided.
+None
+6
+Real-time Prediction Interface
+User Input (Spine Details)
+Trained Random Forest Model
+Predicted Classification
+User Interface
+4 completed
+Accept user input, apply the trained model for real-time prediction, and display the result.
+User receives an immediate prediction.
+None
+7
+Feature Importance Calculation
+Trained Random Forest Model
+Analysis Module
+Feature Importance Rankings
+Users, Analysis
+4 completed
+Calculate and rank the importance of each spine detail in the context of classification using the trained model.
+Feature importance rankings are provided.
+None
+8
+Dynamic Feature Importance Updates
+Additional Spine Details
+Machine Learning Module
+Updated Feature Importance Rankings
+Model Repository
+7 completed
+Incorporate new spine details into the training process and update the feature importance rankings dynamically.
+Feature importance rankings are updated.
+None
+9
+Integration with External Analytics Tools
+Feature Importance Rankings
+External Analytics Tools
+Exported Feature Importance Data
+External Tools
+7 completed
+Provide an export mechanism for feature importance data to be integrated with external analytics tools for further analysis and reporting.
+Feature importance data is exported.
+None
+
+
+
+
+
+
+Non-Functional System Requirements :
+
+Requirement ID
+Description
+Verification Method
+01
+Data Privacy and Security
+Audit logs, and testing.
+02
+Scalability
+Performance testing with dataset sizes.
+03
+Model Robustness
+Robustness testing under varying input conditions.
+04
+Response Time
+Performance testing to verify real-time prediction speed.
+05
+Model Explainability
+Review model documentation and user feedback.
+06
+Integration Flexibility
+Test data export and import functionalities with external analytics tools.
+
+
